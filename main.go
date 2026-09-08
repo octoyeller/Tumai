@@ -8,7 +8,6 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 
 	// backend
-	"Tumai/go"
 	"fmt"
 )
 
@@ -21,8 +20,6 @@ func main() {
 
 
 
-
-    file_roller.Read_list ()
 
 
 

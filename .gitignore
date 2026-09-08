@@ -4,3 +4,4 @@ frontend/wailsjs/
 build/bin/
 filelist
 test.go
+wails.json
