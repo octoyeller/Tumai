@@ -28,37 +28,40 @@ document.getElementById('add_new').onclick = async () => {
 
 
 
-async function showFirstEntry() {
+async function render_list() {
   const list = document.getElementById('list')
   list.innerHTML = '' // clear
 
   const entries = await Get_list()
   if (!entries || entries.length === 0) {
-    list.textContent = 'No entries'
+    list.innerHTML = '<p class="def">There are no files yet.</p>'
     return
   }
 
-  const entry = entries[0]
 
-  const btn = document.createElement('button')
-  btn.className = 'run'
-  btn.id = 'index0'
+    for (let i = 0; i < entries.length; i++) {
+      const btn = document.createElement('button')
+      btn.className = 'run'
+      btn.id = 'index' + i
 
-  const nameP = document.createElement('p')
-  nameP.className = 'name'
-  nameP.textContent = entry.Name   // from Go struct
+      const nameP = document.createElement('p')
+      nameP.className = 'name'
+      nameP.textContent = entries[i].Name   // from Go struct
 
-  const pathP = document.createElement('p')
-  pathP.className = 'path'
-  pathP.textContent = entry.Path
+      const pathP = document.createElement('p')
+      pathP.className = 'path'
+      pathP.textContent = entries[i].Path
 
-  btn.appendChild(nameP)
-  btn.appendChild(pathP)
-  list.appendChild(btn)
+      btn.appendChild(nameP)
+      btn.appendChild(pathP)
+      list.appendChild(btn)
+    }
+
+
 }
 
 
 window.onload = function () {
-    showFirstEntry();
+    render_list();
 }
 
