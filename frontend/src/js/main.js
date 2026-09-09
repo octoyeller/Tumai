@@ -5,6 +5,7 @@ import { Exit_app } from '../../wailsjs/go/main/App';
 import { Get_list } from '../../wailsjs/go/main/App';
 import { Run_file } from '../../wailsjs/go/main/App';
 import { SaveList } from '../../wailsjs/go/main/App';
+import { AddList } from '../../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -25,7 +26,9 @@ document.getElementById('save').onclick = async () => {
 
 
 document.getElementById('add_new').onclick = async () => {
-    console.log('new')
+    await AddList ()
+    await render_list()
+    await Run_file (0)
 }
 
 
@@ -60,6 +63,7 @@ async function render_list() {
     // capture this index for the click
     btn.addEventListener('click', () => {
       Run_file(i)
+      render_list()
     })
 
     list.appendChild(btn)
