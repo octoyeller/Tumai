@@ -22,6 +22,18 @@ type Entry struct {
 
 }
 
+func (e *Entry) export () (line string) {
+    date := strconv.Itoa (e.Date_accessed)
+    zeros := len (date) - 14
+    for i := 0; i < zeros; i++ {
+        date += "0"
+    }
+
+    line = date + "\t" + e.Path
+
+    return line
+}
+
 var List_file_path string
 
 
@@ -43,9 +55,34 @@ func Add_list () {}
 
 func Remove_list () {}
 
+
+
+
 func Save_list (list []Entry) (successful bool) {
+    file_contents := []string{}
+    for _, obj := range list {
+        file_contents = append (file_contents, obj.export())
+    }
+
+    file, err := os.Create(List_file_path)
+    if err != nil {
+        fmt.Println ("Save problem =>", err)
+        return false
+    }
+    defer file.Close ()
+
+    for _, val := range file_contents {
+        _, err = file.WriteString (val + "\n")
+        if err != nil {
+            fmt.Println ("Save problem =>", err)
+            return false
+        }
+    }
+
+    fmt.Println ("List saved.")
     return true
 }
+
 
 
 
@@ -138,5 +175,4 @@ func make_Entry (input string) (e Entry) {
 
     return e
 }
-
 

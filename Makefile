@@ -1,6 +1,6 @@
 CC = wails build
 CF = -clean
-o_name = tumai
+o_name = Tumai
 
 run: compile
 	build/bin/$(o_name)

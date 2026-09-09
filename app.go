@@ -55,3 +55,10 @@ func (a *App) SaveList () {
         fmt.Println ("Could not save Tumai file at:", file_roller.List_file_path)
     }
 }
+
+
+
+
+func (a *App) Run_file (i int) {
+    fmt.Println (i)
+}

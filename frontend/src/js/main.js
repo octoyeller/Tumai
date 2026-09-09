@@ -3,6 +3,8 @@ import '../css/app.css';
 
 import { Exit_app } from '../../wailsjs/go/main/App';
 import { Get_list } from '../../wailsjs/go/main/App';
+import { Run_file } from '../../wailsjs/go/main/App';
+import { SaveList } from '../../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -18,7 +20,7 @@ document.addEventListener('keydown', (e) => {
 
 
 document.getElementById('save').onclick = async () => {
-    console.log('save')
+    SaveList ()
 }
 
 
@@ -40,25 +42,30 @@ async function render_list() {
 
 
     for (let i = 0; i < entries.length; i++) {
-      const btn = document.createElement('button')
-      btn.className = 'run'
-      btn.id = 'index' + i
+    const btn = document.createElement('button')
+    btn.className = 'run'
+    btn.id = 'index' + i
 
-      const nameP = document.createElement('p')
-      nameP.className = 'name'
-      nameP.textContent = entries[i].Name   // from Go struct
+    const nameP = document.createElement('p')
+    nameP.className = 'name'
+    nameP.textContent = entries[i].Name
 
-      const pathP = document.createElement('p')
-      pathP.className = 'path'
-      pathP.textContent = entries[i].Path
+    const pathP = document.createElement('p')
+    pathP.className = 'path'
+    pathP.textContent = entries[i].Path
 
-      btn.appendChild(nameP)
-      btn.appendChild(pathP)
-      list.appendChild(btn)
-    }
+    btn.appendChild(nameP)
+    btn.appendChild(pathP)
 
+    // capture this index for the click
+    btn.addEventListener('click', () => {
+      Run_file(i)
+    })
 
+    list.appendChild(btn)
+  }
 }
+
 
 
 window.onload = function () {
