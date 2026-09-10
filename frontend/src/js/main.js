@@ -41,13 +41,17 @@ document.getElementById('go_to_menu').onclick = async () => {
 
 
 function showMenu() {
-  document.getElementById('menu').hidden = false
-  document.getElementById('carousel').hidden = true
+    const stage = document.getElementById('stage')
+    stage.innerHTML = '<p id="phonetic">Loading...</p>'
+    const top = document.getElementById('top')
+    top.innerHTML = '<h1 style="color: #333333;">Loading...</h1>'
+    document.getElementById('menu').hidden = false
+    document.getElementById('carousel').hidden = true
 }
 
 function showCarousel() {
-  document.getElementById('menu').hidden = true
-  document.getElementById('carousel').hidden = false
+    document.getElementById('carousel').hidden = false
+    document.getElementById('menu').hidden = true
 }
 
 
