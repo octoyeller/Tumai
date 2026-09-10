@@ -6,9 +6,7 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
-
-	// backend
-	"fmt"
+	"github.com/wailsapp/wails/v2/pkg/options/linux"
 )
 
 //go:embed all:frontend/dist
@@ -16,22 +14,20 @@ var assets embed.FS
 
 func main() {
 
-    p := fmt.Println
-
-
-
-
-
 
 	// Create an instance of the app structure
-	p ("Initializing window")
 	app := NewApp()
 
 	// Create application with options
 	window_err := wails.Run(&options.App{
 		Title:  "Tumai",   //  the window title
-		Width:  750,
-		Height: 550,
+		Linux: &linux.Options{
+		    ProgramName: "Tumai",
+		},
+		Width:  650,
+		Height: 450,
+		MinWidth: 650,
+		MinHeight: 450,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
@@ -47,5 +43,4 @@ func main() {
 		println("Error:", window_err.Error())
 	}
 
-//	p ("Exiting")
 }
