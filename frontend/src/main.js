@@ -1,12 +1,13 @@
-import '../css/style.css';
-import '../css/menu.css';
-import '../css/carousel.css'
+import './css/style.css';
+import './css/menu.css';
+import './css/carousel.css'
 
-import { Exit_app } from '../../wailsjs/go/main/App';
-import { Get_list } from '../../wailsjs/go/main/App';
-import { Run_file } from '../../wailsjs/go/main/App';
-import { SaveList } from '../../wailsjs/go/main/App';
-import { AddList } from '../../wailsjs/go/main/App';
+import { Exit_app } from '../wailsjs/go/main/App';
+import { Get_list } from '../wailsjs/go/main/App';
+import { Run_file } from '../wailsjs/go/main/App';
+import { SaveList } from '../wailsjs/go/main/App';
+import { AddList } from '../wailsjs/go/main/App';
+import { SaveSheet } from '../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -35,6 +36,12 @@ document.getElementById('add_new').onclick = async () => {
 
 document.getElementById('go_to_menu').onclick = async () => {
     showMenu()
+}
+
+
+
+document.getElementById('save_file').onclick = async () => {
+    SaveSheet()
 }
 
 
@@ -85,8 +92,15 @@ async function render_list() {
 
     // capture this index for the click
     btn.addEventListener('click', () => {
-      Run_file(i)
       showCarousel()
+      Run_file(i)
+
+      const title = document.getElementById ('top')
+      const h = document.createElement('h1')
+      h.textContent = entries[i].Name
+      title.innerHTML = ''
+      title.appendChild(h)
+
       render_list()
     })
 

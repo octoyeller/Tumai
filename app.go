@@ -3,10 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 
     "github.com/wailsapp/wails/v2/pkg/runtime"
 
-	"Tumai/go"
+	"Tumai/go/sheet"
+	"Tumai/go/file_roller"
 )
 
 // App struct
@@ -49,14 +51,14 @@ func (a *App) Get_list () (list []file_roller.Entry) {
 func (a *App) AddList () () {
     path, err := a.Pick_file ()
     if err != nil {
-        fmt.Println (err)
+        log.Println (err)
     }
     if path == "" {
-        fmt.Println ("No file chosen.")
+        log.Println ("No file chosen.")
         return
     }
 
-    fmt.Println ("Picking file:", path)
+    log.Println ("Picking file:", path)
     a.list = file_roller.Add_list (path, a.list)
 }
 
@@ -64,7 +66,7 @@ func (a *App) RemoveList () () {}
 
 func (a *App) SaveList () {
     if !file_roller.Save_list (a.list) {
-        fmt.Println ("Could not save Tumai file at:", file_roller.List_file_path)
+        log.Println ("Could not save Tumai file at:", file_roller.List_file_path)
     }
 }
 
@@ -72,9 +74,9 @@ func (a *App) SaveList () {
 
 
 func (a *App) Run_file (i int) {
-    fmt.Println (i)
     _, ti := file_roller.Get_time ()
     a.list[i].Date_accessed = ti
+    sheet.Run_sheet (a.list[i])
 }
 
 
@@ -98,4 +100,12 @@ func (a *App) Pick_file() (string, error) {
         return "", err
     }
     return path, nil // empty string if user cancelled
+}
+
+
+
+
+
+func (a *App) SaveSheet () {
+    sheet.Save_sheet ()
 }
