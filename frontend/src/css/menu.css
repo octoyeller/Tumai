@@ -1,0 +1,86 @@
+#menu h1 {
+    font-size: 26px;
+    text-align: center;
+}
+
+#menu #topper {
+    margin: 30px auto;
+}
+
+
+
+#menu .action {
+    padding: 5px 12px 6px 12px;
+    border-radius: 5px;
+    border: 2px solid rgba(124, 58, 237, 0.8);
+    font-size: 16px;
+    font-weight: 550;
+    margin: 5px auto;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    margin: 0 8px
+}
+
+
+#menu p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+#menu .butoni {
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+#menu #list {
+    margin: 30px auto 0 auto;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    border-radius: 6px;
+    border: 2px solid rgba(124, 58, 237, 0.8);
+    width: 450px;
+    padding: 1px;
+}
+
+
+#menu .run {
+    width: 100%;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    border: 0 solid rgba(124, 58, 237, 0.8);
+    padding: 12px 18px;
+}
+
+#menu .name {
+    font-size: 18px;
+    color: #f0f0f0;
+}
+
+#menu .path {
+    color: #aaaaaa;
+    font-size: 12px;
+}
+
+#menu .run:hover {
+    background-color: #333333;
+    transition: ease-out 0.3s;
+    cursor: pointer;
+    display: block;
+}
+
+
+#menu .action:hover {
+    background-color: #333333;
+    transition: ease-out 0.3s;
+    cursor: pointer;
+}
+
+
+
+#menu .def {
+    font-size: 18px;
+    margin: 10px auto;
+    text-align: center;
+}

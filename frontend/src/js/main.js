@@ -1,5 +1,6 @@
 import '../css/style.css';
-import '../css/app.css';
+import '../css/menu.css';
+import '../css/carousel.css'
 
 import { Exit_app } from '../../wailsjs/go/main/App';
 import { Get_list } from '../../wailsjs/go/main/App';
@@ -20,7 +21,7 @@ document.addEventListener('keydown', (e) => {
 
 
 
-document.getElementById('save').onclick = async () => {
+document.getElementById('save_list').onclick = async () => {
     SaveList ()
 }
 
@@ -29,6 +30,24 @@ document.getElementById('add_new').onclick = async () => {
     await AddList ()
     await render_list()
     await Run_file (0)
+}
+
+
+document.getElementById('go_to_menu').onclick = async () => {
+    showMenu()
+}
+
+
+
+
+function showMenu() {
+  document.getElementById('menu').hidden = false
+  document.getElementById('carousel').hidden = true
+}
+
+function showCarousel() {
+  document.getElementById('menu').hidden = true
+  document.getElementById('carousel').hidden = false
 }
 
 
@@ -63,6 +82,7 @@ async function render_list() {
     // capture this index for the click
     btn.addEventListener('click', () => {
       Run_file(i)
+      showCarousel()
       render_list()
     })
 
@@ -73,6 +93,7 @@ async function render_list() {
 
 
 window.onload = function () {
+    showMenu();
     render_list();
 }
 

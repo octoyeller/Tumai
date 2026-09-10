@@ -4,10 +4,12 @@
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <link rel="stylesheet" href="/src/css/style.css"/>
+    <link rel="stylesheet" href="/src/css/menu.css"/>
+    <link rel="stylesheet" href="/src/css/carousel.css"/>
     <title>Tumai</title>
 </head>
 <body>
-<div id="app">
+<div id="menu">
 
   <div id="topper">
     <h1>Chose file:</h1>
@@ -19,35 +21,62 @@
       <button id="add_new" class="action">
         <p>Add new file...</p>
       </button>
-      <button id="save" class="action">
-        <p>Save Progress</p>
+      <button id="save_list" class="action">
+        <p>Save the List</p>
       </button>
     </div>
 
     <div id="list">
       <p class="def">Loading...</p>
-
-      <!--
-      <button class="run" id="indexX">
-        <p class="name">My Excel</p>
-        <p class="path">/path/to/my/excel/on/the/drive</p>
-      </button>
-      <button class="run" id="indexX">
-        <p class="name">My Excel</p>
-        <p class="path">/path/to/my/excel/on/the/drive</p>
-      </button>
-      <button class="run" id="indexX">
-        <p class="name">My Excel</p>
-        <p class="path">/path/to/my/excel/on/the/drive</p>
-      </button>
-      -->
-
     </div>
 
   </div>
 
+</div>
 
 
+<div id="carousel">
+  <div id="topper">
+    <h2>FileName</h2>
+  </div>
+
+  <div class="navi">
+    <button id="go_to_menu">
+      <p>&lt;</p>
+    </button>
+    <button id="what">
+      <p>Show:</p>
+    </button>
+    <button id="select">
+      <p>Filter:</p>
+    </button>
+    <button id="order">
+      <p>Order:</p>
+    </button>
+    <button id="save_file">
+      <p>Save Progress</p>
+    </button>
+  </div>
+
+    <button id="stage">
+      <h1 id="name">Name</h1>
+      <p id="phonetic">Phonetic</p>
+      <p id="description">Description</p>
+      <p id="notes">Notes</p>
+    </button>
+
+    <div class="navi" id="bottom">
+      <p>3/10/124</p>
+      <button id="previous">
+        <p>&lt;</p>
+      </button>
+      <button id="learned">
+        <p>Next!</p>
+      </button>
+      <button id="next">
+        <p>&gt;</p>
+      </button>
+    </div>
 </div>
 
 
