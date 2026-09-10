@@ -162,7 +162,7 @@ func Save_list (list []Entry) (successful bool) {
 
     file, err := os.Create(List_file_path)
     if err != nil {
-        fmt.Println ("Save problem =>", err)
+        log.Println ("Save problem =>", err)
         return false
     }
     defer file.Close ()
@@ -170,12 +170,12 @@ func Save_list (list []Entry) (successful bool) {
     for _, val := range file_contents {
         _, err = file.WriteString (val + "\n")
         if err != nil {
-            fmt.Println ("Save problem =>", err)
+            log.Println ("Save problem =>", err)
             return false
         }
     }
 
-    fmt.Println ("List saved.")
+    log.Println ("List saved.")
     return true
 }
 
@@ -223,7 +223,7 @@ func file_good (path string) bool {
 
     if err != nil {
         if errors.Is(err, os.ErrNotExist) {
-            fmt.Println ("File does not exist:", path)
+            log.Println ("File does not exist:", path)
             return true
         }
         return false
