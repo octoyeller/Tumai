@@ -17,6 +17,20 @@
 7. On exit save the file
 
 
+ORDER - as goes / random 
+SELECT - all / learned / not learned
+WHAT - name / meaning
+SAVE
+EXIT
+
+excel structure
+Sheet1
+col 1 - name
+col 2 - phonetic
+col 3 - meaning
+col 4 - notes
+col 5 - learned / not learned
+
 
 Contents of the list file:
 ```

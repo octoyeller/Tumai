@@ -16,6 +16,7 @@ type App struct {
 	ctx context.Context
 
 	list []file_roller.Entry
+	reme []sheet.Reme
 }
 
 // NewApp creates a new App application struct
@@ -76,7 +77,7 @@ func (a *App) SaveList () {
 func (a *App) Run_file (i int) {
     _, ti := file_roller.Get_time ()
     a.list[i].Date_accessed = ti
-    sheet.Run_sheet (a.list[i])
+    a.reme = sheet.Run_sheet (a.list[i])
 }
 
 
