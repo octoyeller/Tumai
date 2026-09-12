@@ -8,6 +8,7 @@ import { Run_file } from '../wailsjs/go/main/App';
 import { SaveList } from '../wailsjs/go/main/App';
 import { AddList } from '../wailsjs/go/main/App';
 import { SaveSheet } from '../wailsjs/go/main/App';
+import { Get_card } from '../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -45,13 +46,14 @@ document.getElementById('save_file').onclick = async () => {
 }
 
 
+document.getElementById('stage').onclick = async () => {
+    flip_card()
+}
+
+
 
 
 function showMenu() {
-    const stage = document.getElementById('stage')
-    stage.innerHTML = '<p id="phonetic">Loading...</p>'
-    const top = document.getElementById('top')
-    top.innerHTML = '<h1 style="color: #333333;">Loading...</h1>'
     document.getElementById('menu').hidden = false
     document.getElementById('carousel').hidden = true
 }
@@ -61,6 +63,36 @@ function showCarousel() {
     document.getElementById('menu').hidden = true
 }
 
+async function roll_file (i) {
+    showCarousel()
+    await Run_file(i)
+    const reme = await Get_card ()
+
+    const cname = document.getElementById('name');
+    cname.hidden = false;
+    cname.textContent = reme.Name;
+    const cp = document.getElementById('phonetic');
+    cp.hidden = true;
+    cp.textContent = reme.Phonetic;
+    const cm = document.getElementById('meaning');
+    cm.hidden = true;
+    cm.textContent = reme.Meaning;
+    const cn = document.getElementById('notes');
+    cn.hidden = true;
+    cn.textContent = reme.Note;
+}
+
+
+function flip_card () {
+    const cname = document.getElementById('name');
+    cname.hidden = !cname.hidden;
+    const cp = document.getElementById('phonetic');
+    cp.hidden = !cp.hidden;
+    const cm = document.getElementById('meaning');
+    cm.hidden = !cm.hidden;
+    const cn = document.getElementById('notes');
+    cn.hidden = !cn.hidden;
+}
 
 
 async function render_list() {
@@ -91,9 +123,8 @@ async function render_list() {
     btn.appendChild(pathP)
 
     // capture this index for the click
-    btn.addEventListener('click', () => {
-      showCarousel()
-      Run_file(i)
+    btn.addEventListener('click', async () => {
+      await roll_file(i)
 
       const title = document.getElementById ('top')
       const h = document.createElement('h1')

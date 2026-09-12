@@ -28,8 +28,8 @@ Sheet1
 col 1 - name
 col 2 - phonetic
 col 3 - meaning
-col 4 - notes
-col 5 - learned / not learned
+col 4 - notes   (optional)
+col 5 - learned / not learned   (optional - will be added on save)
 
 
 Contents of the list file:

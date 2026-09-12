@@ -17,6 +17,7 @@ type App struct {
 
 	list []file_roller.Entry
 	reme []sheet.Reme
+	irem int
 }
 
 // NewApp creates a new App application struct
@@ -78,8 +79,14 @@ func (a *App) Run_file (i int) {
     _, ti := file_roller.Get_time ()
     a.list[i].Date_accessed = ti
     a.reme = sheet.Run_sheet (a.list[i])
+    a.irem = 0
 }
 
+
+
+func (a *App) Get_card () (sheet.Reme) {
+    return a.reme[a.irem]
+}
 
 
 

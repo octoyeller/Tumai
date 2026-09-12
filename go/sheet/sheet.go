@@ -10,6 +10,7 @@ import (
 
 
 var file_path string
+var index int
 
 type Reme struct {
     Name string             //  col 1
@@ -21,6 +22,7 @@ type Reme struct {
 
 
 func Run_sheet (e file_roller.Entry) (ra []Reme) {
+    index = 0
     log.Println (e.Name)
     file_path = e.Path
 
