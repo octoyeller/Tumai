@@ -67,6 +67,10 @@ func Save_sheet (input []Reme) bool {
     f.SetCellValue (sheet, fmt.Sprintf ("D1"), "Notes")
     f.SetCellValue (sheet, fmt.Sprintf ("E1"), "Mastered")
 
+    f.SetColWidth (sheet, "A", "B", 20)
+    f.SetColWidth (sheet, "C", "D", 50)
+    f.SetColWidth (sheet, "E", "E", 10)
+
     for i, r := range input {
         row := i + 2
         f.SetCellValue (sheet, fmt.Sprintf ("A%d", row), r.Name)
