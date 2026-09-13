@@ -10,6 +10,7 @@ import { AddList } from '../wailsjs/go/main/App';
 import { SaveSheet } from '../wailsjs/go/main/App';
 import { Get_card } from '../wailsjs/go/main/App';
 import { Next_card, Learn_card, Previous_card } from '../wailsjs/go/main/App';
+import { Get_score } from '../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -56,18 +57,21 @@ document.getElementById('previous').onclick = async () => {
     const rem = await Previous_card();
     showFace();
     setCard(rem);
+    showScore();
 }
 
 document.getElementById('learned').onclick = async () => {
     const rem = await Learn_card();
     showFace();
     setCard(rem);
+    showScore();
 }
 
 document.getElementById('next').onclick = async () => {
     const rem = await Next_card();
     showFace();
     setCard(rem);
+    showScore();
 }
 
 
@@ -94,6 +98,14 @@ async function setCard(reme) {
 }
 
 
+async function showScore() {
+    const score = await Get_score();
+    const board = document.getElementById('score');
+    board.textContent = score.Correct + '/' + score.Reviewed + '/' + score.All;
+}
+
+
+
 
 function showMenu() {
     document.getElementById('menu').hidden = false
@@ -111,6 +123,7 @@ async function roll_file (i) {
     const reme = await Get_card ();
     showFace();
     await setCard(reme);
+    showScore()
 }
 
 

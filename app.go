@@ -18,6 +18,7 @@ type App struct {
 	list []file_roller.Entry
 	reme []sheet.Reme
 	irem int
+	sb sheet.Scoreboard
 }
 
 // NewApp creates a new App application struct
@@ -80,6 +81,26 @@ func (a *App) Run_file (i int) {
     a.list[i].Date_accessed = ti
     a.reme = sheet.Run_sheet (a.list[i])
     a.irem = 0
+    a.sb.All = len (a.reme)
+    a.Update_score ()
+}
+
+
+func (a *App) Get_score () (sheet.Scoreboard) {
+    a.Update_score ()
+    return a.sb
+}
+
+func (a *App) Update_score () {
+    a.sb.Reviewed = a.irem
+    a.sb.Correct = 0
+    a.sb.Wrong = 0
+    for _, val := range a.reme[:a.irem] {
+        if val.Mastered {
+            a.sb.Correct++
+        }
+    }
+    a.sb.Wrong = a.sb.Reviewed - a.sb.Correct
 }
 
 

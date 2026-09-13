@@ -19,6 +19,13 @@ type Reme struct {
     Mastered bool           //  col 5
 }
 
+type Scoreboard struct {
+    All int
+    Reviewed int
+    Correct int
+    Wrong int
+}
+
 
 func Run_sheet (e file_roller.Entry) (ra []Reme) {
     index = 0
@@ -104,9 +111,5 @@ func Get_reme (rows [][]string) (ra []Reme) {
 
 
 
-//  TODO => get file
 //  TODO => shufler
 //  TODO => save
-//  TODO => mark learned
-//  TODO => next
-//  TODO => previous
