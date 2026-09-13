@@ -1,6 +1,6 @@
 import './css/style.css';
 import './css/menu.css';
-import './css/carousel.css'
+import './css/carousel.css';
 
 import { Exit_app } from '../wailsjs/go/main/App';
 import { Get_list } from '../wailsjs/go/main/App';
@@ -11,6 +11,8 @@ import { SaveSheet } from '../wailsjs/go/main/App';
 import { Get_card } from '../wailsjs/go/main/App';
 import { Next_card, Learn_card, Previous_card } from '../wailsjs/go/main/App';
 import { Get_score } from '../wailsjs/go/main/App';
+import { RemoveList } from '../wailsjs/go/main/App';
+import { RidSheet } from '../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -151,9 +153,20 @@ async function render_list() {
 
 
     for (let i = 0; i < entries.length; i++) {
-    const btn = document.createElement('button')
+    const btn = document.createElement('div')
     btn.className = 'run'
     btn.id = 'index' + i
+
+    const holder = document.createElement('button')
+    holder.className = 'holder'
+    holder.type = 'button'
+
+    const del = document.createElement('button')
+    del.className = 'del'
+
+    const cross = document.createElement('p')
+    cross.className = 'x'
+    cross.textContent = 'X'
 
     const nameP = document.createElement('p')
     nameP.className = 'name'
@@ -163,23 +176,45 @@ async function render_list() {
     pathP.className = 'path'
     pathP.textContent = entries[i].Path
 
-    btn.appendChild(nameP)
-    btn.appendChild(pathP)
+    const cb = document.createElement('div')
+    cb.className = 'cb'
+
+
+    btn.appendChild(holder);
+    btn.appendChild(del);
+    holder.appendChild(nameP);
+    holder.appendChild(pathP);
+    del.appendChild(cross);
+    btn.appendChild(cb);
 
     // capture this index for the click
     btn.addEventListener('click', async () => {
-      await roll_file(i)
+      await roll_file(i);
 
-      const title = document.getElementById ('top')
-      const h = document.createElement('h1')
-      h.textContent = entries[i].Name
-      title.innerHTML = ''
-      title.appendChild(h)
+      const title = document.getElementById ('top');
+      const h = document.createElement('h1');
+      h.textContent = entries[i].Name;
+      title.innerHTML = '';
+      title.appendChild(h);
 
-      render_list()
+      render_list();
     })
 
-    list.appendChild(btn)
+    del.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        await RemoveList(i);
+        await render_list();
+    })
+
+
+
+
+
+
+
+    list.appendChild(btn);
   }
 }
 

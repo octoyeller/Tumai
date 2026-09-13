@@ -45,7 +45,7 @@ func (a *App) Exit_app () {
 
 func (a *App) Get_list () (list []file_roller.Entry) {
 
-    a.list = file_roller.Read_list (a.list)
+//    a.list = file_roller.Read_list (a.list)
 
     return a.list
 }
@@ -65,7 +65,9 @@ func (a *App) AddList () () {
     a.list = file_roller.Add_list (path, a.list)
 }
 
-func (a *App) RemoveList () () {}
+func (a *App) RemoveList (i int) () {
+    a.list = append (a.list[:i], a.list[i+1:]...)
+}
 
 func (a *App) SaveList () {
     if !file_roller.Save_list (a.list) {
@@ -110,7 +112,9 @@ func (a *App) Get_card () (sheet.Reme) {
 }
 
 
-
+func (a *App) RidSheet () {
+    a.reme = nil
+}
 
 
 

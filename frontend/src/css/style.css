@@ -20,3 +20,11 @@ body {
     src: local(""),
     url("assets/fonts/nunito-v16-latin-regular.woff2") format("woff2");
 }
+
+.cb {
+    clear: both;
+    padding: 0;
+    margin: 0;
+    width: 0;
+    height: 0;
+}
