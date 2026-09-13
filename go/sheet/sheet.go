@@ -61,9 +61,14 @@ func Save_sheet (input []Reme) bool {
 
     f.SetActiveSheet (0)
 
-    for i, r := range input {
-        row := i + 1
+    f.SetCellValue (sheet, fmt.Sprintf ("A1"), "Name")
+    f.SetCellValue (sheet, fmt.Sprintf ("B1"), "Phonetic")
+    f.SetCellValue (sheet, fmt.Sprintf ("C1"), "Meaning")
+    f.SetCellValue (sheet, fmt.Sprintf ("D1"), "Notes")
+    f.SetCellValue (sheet, fmt.Sprintf ("E1"), "Mastered")
 
+    for i, r := range input {
+        row := i + 2
         f.SetCellValue (sheet, fmt.Sprintf ("A%d", row), r.Name)
         f.SetCellValue (sheet, fmt.Sprintf ("B%d", row), r.Phonetic)
         f.SetCellValue (sheet, fmt.Sprintf ("C%d", row), r.Meaning)
@@ -98,13 +103,13 @@ func Open () (bool, [][]string) {
         return false, nil
     }
 
-    for _, val := range rows {
-        if len (val) < 2 {
+    for i, val := range rows {
+        if i < 1 && len (val) < 2 {
             return false, nil
         }
     }
 
-    return true, rows
+    return true, rows[1:]
 }
 
 
