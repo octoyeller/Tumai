@@ -74,7 +74,7 @@ func Read_list (l_in []Entry) (l_out []Entry) {
 
 
 func Add_list (path string, e_in []Entry) (e_out []Entry) {
-    if !file_good (path) {
+    if !File_good (path) {
         fmt.Println ("Invalid file?")
         return e_in
     }
@@ -192,7 +192,7 @@ func fetch_file () (file_contents []string) {
     list_path := filepath.Join (home_dir, ".Tumai.list")
 
 
-    if !file_good (list_path) {
+    if !File_good (list_path) {
         log.Fatal ("Needed file is unavailable:", list_path)
     }
 
@@ -217,7 +217,7 @@ func fetch_file () (file_contents []string) {
 }
 
 
-func file_good (path string) bool {
+func File_good (path string) bool {
 
     file, err := os.Stat (path)
 

@@ -136,7 +136,7 @@ func (a *App) Pick_file() (string, error) {
 
 
 func (a *App) SaveSheet () {
-    sheet.Save_sheet ()
+    sheet.Save_sheet (a.reme)
 }
 
 

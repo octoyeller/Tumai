@@ -3,6 +3,8 @@ package sheet
 import (
     "Tumai/go/file_roller"
     "log"
+    "fmt"
+    "strconv"
 
     "github.com/xuri/excelize/v2"
 )
@@ -10,6 +12,7 @@ import (
 
 var file_path string
 var index int
+var sheet string
 
 type Reme struct {
     Name string             //  col 1
@@ -43,8 +46,37 @@ func Run_sheet (e file_roller.Entry) (ra []Reme) {
 }
 
 
-func Save_sheet () {
-    log.Println (file_path)
+func Save_sheet (input []Reme) bool {
+    log.Println (file_path, len(input))
+
+    if !file_roller.File_good (file_path) {
+        return false
+    }
+
+    f, err := excelize.OpenFile (file_path)
+    if err != nil {
+        log.Printf ("Failed to open sheet for writing: %v\n%v\n", file_path, err)
+    }
+    defer f.Close ()
+
+    f.SetActiveSheet (0)
+
+    for i, r := range input {
+        row := i + 1
+
+        f.SetCellValue (sheet, fmt.Sprintf ("A%d", row), r.Name)
+        f.SetCellValue (sheet, fmt.Sprintf ("B%d", row), r.Phonetic)
+        f.SetCellValue (sheet, fmt.Sprintf ("C%d", row), r.Meaning)
+        f.SetCellValue (sheet, fmt.Sprintf ("D%d", row), r.Note)
+        f.SetCellValue (sheet, fmt.Sprintf ("E%d", row), strconv.FormatBool (r.Mastered))
+    }
+
+    save_err := f.SaveAs (file_path)
+    if save_err != nil {
+        log.Printf ("Failed to save sheet => %v\n%v\n", file_path, save_err)
+        return false
+    }
+    return true
 }
 
 
@@ -56,7 +88,11 @@ func Open () (bool, [][]string) {
     }
     defer f.Close ()
 
-    rows, err := f.GetRows ("Sheet1")
+    for _, name := range f.GetSheetList () {
+        sheet = name
+        break
+    }
+    rows, err := f.GetRows (sheet)
     if err != nil {
         log.Printf ("Could not read file: %s\n%s\n", file_path, err)
         return false, nil
@@ -112,4 +148,3 @@ func Get_reme (rows [][]string) (ra []Reme) {
 
 
 //  TODO => shufler
-//  TODO => save
