@@ -117,3 +117,28 @@ func (a *App) Pick_file() (string, error) {
 func (a *App) SaveSheet () {
     sheet.Save_sheet ()
 }
+
+
+func (a *App) Next_card () (sheet.Reme) {
+    a.reme[a.irem].Mastered = false
+    if a.irem < len (a.reme) {
+        a.irem++
+    }
+    return a.reme[a.irem]
+}
+
+func (a *App) Learn_card () (sheet.Reme) {
+    a.reme[a.irem].Mastered = true
+    if a.irem < len (a.reme) {
+        a.irem++
+    }
+    return a.reme[a.irem]
+}
+
+func (a *App) Previous_card () (sheet.Reme) {
+    if a.irem > 0 {
+        a.irem--
+    }
+    return a.reme[a.irem]
+
+}

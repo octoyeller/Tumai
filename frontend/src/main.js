@@ -9,6 +9,7 @@ import { SaveList } from '../wailsjs/go/main/App';
 import { AddList } from '../wailsjs/go/main/App';
 import { SaveSheet } from '../wailsjs/go/main/App';
 import { Get_card } from '../wailsjs/go/main/App';
+import { Next_card, Learn_card, Previous_card } from '../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -51,6 +52,47 @@ document.getElementById('stage').onclick = async () => {
 }
 
 
+document.getElementById('previous').onclick = async () => {
+    const rem = await Previous_card();
+    showFace();
+    setCard(rem);
+}
+
+document.getElementById('learned').onclick = async () => {
+    const rem = await Learn_card();
+    showFace();
+    setCard(rem);
+}
+
+document.getElementById('next').onclick = async () => {
+    const rem = await Next_card();
+    showFace();
+    setCard(rem);
+}
+
+
+function showFace() {
+    const cname = document.getElementById('name');
+    cname.hidden = false;
+    const cp = document.getElementById('phonetic');
+    cp.hidden = true;
+    const cm = document.getElementById('meaning');
+    cm.hidden = true;
+    const cn = document.getElementById('notes');
+    cn.hidden = true;
+}
+
+async function setCard(reme) {
+    const cname = document.getElementById('name');
+    cname.textContent = reme.Name;
+    const cp = document.getElementById('phonetic');
+    cp.textContent = reme.Phonetic;
+    const cm = document.getElementById('meaning');
+    cm.textContent = reme.Meaning;
+    const cn = document.getElementById('notes');
+    cn.textContent = reme.Note;
+}
+
 
 
 function showMenu() {
@@ -64,22 +106,11 @@ function showCarousel() {
 }
 
 async function roll_file (i) {
-    showCarousel()
-    await Run_file(i)
-    const reme = await Get_card ()
-
-    const cname = document.getElementById('name');
-    cname.hidden = false;
-    cname.textContent = reme.Name;
-    const cp = document.getElementById('phonetic');
-    cp.hidden = true;
-    cp.textContent = reme.Phonetic;
-    const cm = document.getElementById('meaning');
-    cm.hidden = true;
-    cm.textContent = reme.Meaning;
-    const cn = document.getElementById('notes');
-    cn.hidden = true;
-    cn.textContent = reme.Note;
+    showCarousel();
+    await Run_file(i);
+    const reme = await Get_card ();
+    showFace();
+    await setCard(reme);
 }
 
 

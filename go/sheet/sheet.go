@@ -3,7 +3,6 @@ package sheet
 import (
     "Tumai/go/file_roller"
     "log"
-    "fmt"
 
     "github.com/xuri/excelize/v2"
 )
@@ -98,7 +97,6 @@ func Get_reme (rows [][]string) (ra []Reme) {
         }
 
         ra = append (ra, r)
-        fmt.Printf ("Name:     %s\nPhonetic: %s\nMeaning:  %s\nNote:     %s\nMastered: %v\n", r.Name, r.Phonetic, r.Meaning, r.Note, r.Mastered)
     }
 
     return ra
