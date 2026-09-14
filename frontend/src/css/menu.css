@@ -100,12 +100,12 @@
 
 #menu .del {
     float: right;
-    border: none;
+    border: 3px solid #1e1e1e;
     border-radius: 5px;
     color: #1e1e1e;
     background-color: #1e1e1e;
-    width: 37px;
-    height: 37px;
+    width: 35px;
+    height: 35px;
     font-size: 20px;
     margin: 0;
     padding: 0;
@@ -114,13 +114,19 @@
 #menu .del p {
     text-align: center;
     font-weight: 600;
+    height: 29px;
+    width: 29px;
+    line-height: 29px;
 }
 
 #menu .del:hover {
-    cursor: pointer;
-    color: #555555
 }
 
 #menu .run:hover .del .x {
-    color: #555555;
+    color: #1e1e1e;
+    cursor: pointer;
+}
+
+#menu .run:hover .del {
+    background-color: #333333;
 }
