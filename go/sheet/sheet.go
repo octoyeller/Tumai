@@ -5,6 +5,7 @@ import (
     "log"
     "fmt"
     "strconv"
+    "math/rand"
 
     "github.com/xuri/excelize/v2"
 )
@@ -156,4 +157,16 @@ func Get_reme (rows [][]string) (ra []Reme) {
 
 
 
-//  TODO => shufler
+func Shuffler (in []Reme) (out []int) {
+
+    ii := len (in)
+    var ran int
+
+    for i := 0; i < ii; i++ {
+        ran = rand.Int () % (ii - i)
+        out = append (out, ran)
+        in = append (in[:ran], in[ran:]...)
+    }
+
+    return out
+}
