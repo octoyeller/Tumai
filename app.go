@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
+	"math/rand"
 
     "github.com/wailsapp/wails/v2/pkg/runtime"
 
@@ -20,6 +22,8 @@ type App struct {
 	irem int
 	sb sheet.Scoreboard
 	what bool
+	shuffled bool
+	shuf_prox []int
 }
 
 // NewApp creates a new App application struct
@@ -34,13 +38,12 @@ func (a *App) startup(ctx context.Context) {
 
 
     a.list = file_roller.Read_list (a.list)
+    rand.Seed (time.Now ().UnixNano () )
 
 }
 
 
 func (a *App) Exit_app () {
-    fmt.Println ("Quit!")
-    // TODO save
     runtime.Quit (a.ctx)
 }
 
@@ -87,6 +90,8 @@ func (a *App) Run_file (i int) {
     a.sb.All = len (a.reme)
     a.Update_score ()
     a.what = false
+    a.shuffled = false
+
 }
 
 
@@ -110,6 +115,15 @@ func (a *App) Update_score () {
 
 
 func (a *App) Get_card () (sheet.Reme) {
+
+    if len (a.reme) < 1 {
+        return sheet.Reme{}
+    }
+
+    if a.shuffled {
+        return a.reme[a.shuf_prox[a.irem]]
+    }
+
     return a.reme[a.irem]
 }
 
@@ -147,26 +161,27 @@ func (a *App) SaveSheet () {
 
 
 func (a *App) Next_card () (sheet.Reme) {
-    a.reme[a.irem].Mastered = false
+    a.reme[a.card_index ()].Mastered = false
     if a.irem < len (a.reme) {
         a.irem++
     }
-    return a.reme[a.irem]
+    return a.reme[a.card_index ()]
 }
 
 func (a *App) Learn_card () (sheet.Reme) {
-    a.reme[a.irem].Mastered = true
+    a.reme[a.card_index ()].Mastered = true
     if a.irem < len (a.reme) {
         a.irem++
     }
-    return a.reme[a.irem]
+    return a.reme[a.card_index ()]
 }
 
 func (a *App) Previous_card () (sheet.Reme) {
     if a.irem > 0 {
         a.irem--
     }
-    return a.reme[a.irem]
+
+    return a.reme[a.card_index()]
 
 }
 
@@ -186,6 +201,20 @@ func (a *App) SwitchSelect () {
 }
 
 
-func (a *App) SwitchOrder () {
-    fmt.Println ("Oreder")
+func (a *App) SwitchOrder () bool {
+    a.shuffled = !a.shuffled
+    if a.shuffled {
+        a.shuf_prox = sheet.Shuffler (a.reme)
+    } else {
+        a.shuf_prox = nil
+    }
+    return a.shuffled
+}
+
+
+func (a *App) card_index() int {
+    if a.shuffled {
+        return a.shuf_prox[a.irem]
+    }
+    return a.irem
 }

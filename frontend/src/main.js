@@ -74,7 +74,19 @@ document.getElementById('select').onclick = async () => {
 
 
 document.getElementById('order').onclick = async () => {
-    SwitchOrder()
+
+    const shuffled = await SwitchOrder()
+    const but = document.getElementById('order')
+
+    if (shuffled) {
+        but.innerHTML = '<p>Order: Random</p>'
+    } else {
+        but.innerHTML = '<p>Order: As Goes</p>'
+    }
+
+    const reme = await Get_card()
+    await setCard(reme)
+    showFace()
 }
 
 
