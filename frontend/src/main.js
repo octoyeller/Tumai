@@ -13,6 +13,7 @@ import { Next_card, Learn_card, Previous_card } from '../wailsjs/go/main/App';
 import { Get_score } from '../wailsjs/go/main/App';
 import { RemoveList } from '../wailsjs/go/main/App';
 import { RidSheet } from '../wailsjs/go/main/App';
+import { SwitchWhat, SwitchSelect, SwitchOrder, GetWhat } from '../wailsjs/go/main/App';
 
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q') {
@@ -55,29 +56,51 @@ document.getElementById('stage').onclick = async () => {
 }
 
 
+document.getElementById('what').onclick = async () => {
+    const rev = await SwitchWhat()
+    const but = document.getElementById('what');
+    if (rev) {
+        but.innerHTML = '<p>Show: Meaning</p>'
+    } else {
+        but.innerHTML = '<p>Show: Name</p>'
+    }
+    showFace()
+}
+
+
+document.getElementById('select').onclick = async () => {
+    SwitchSelect()
+}
+
+
+document.getElementById('order').onclick = async () => {
+    SwitchOrder()
+}
+
+
 document.getElementById('previous').onclick = async () => {
     const rem = await Previous_card();
-    showFace();
+    await showFace();
     setCard(rem);
     showScore();
 }
 
 document.getElementById('learned').onclick = async () => {
     const rem = await Learn_card();
-    showFace();
+    await showFace();
     setCard(rem);
     showScore();
 }
 
 document.getElementById('next').onclick = async () => {
     const rem = await Next_card();
-    showFace();
+    await showFace();
     setCard(rem);
     showScore();
 }
 
 
-function showFace() {
+async function showFace() {
     const cname = document.getElementById('name');
     cname.hidden = false;
     const cp = document.getElementById('phonetic');
@@ -86,6 +109,11 @@ function showFace() {
     cm.hidden = true;
     const cn = document.getElementById('notes');
     cn.hidden = true;
+
+    const rev = await GetWhat ()
+    if (rev) {
+        flip_card()
+    }
 }
 
 async function setCard(reme) {
@@ -123,7 +151,7 @@ async function roll_file (i) {
     showCarousel();
     await Run_file(i);
     const reme = await Get_card ();
-    showFace();
+    await showFace();
     await setCard(reme);
     showScore()
 }
@@ -207,10 +235,6 @@ async function render_list() {
         await RemoveList(i);
         await render_list();
     })
-
-
-
-
 
 
 

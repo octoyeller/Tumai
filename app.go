@@ -19,6 +19,7 @@ type App struct {
 	reme []sheet.Reme
 	irem int
 	sb sheet.Scoreboard
+	what bool
 }
 
 // NewApp creates a new App application struct
@@ -85,6 +86,7 @@ func (a *App) Run_file (i int) {
     a.irem = 0
     a.sb.All = len (a.reme)
     a.Update_score ()
+    a.what = false
 }
 
 
@@ -166,4 +168,24 @@ func (a *App) Previous_card () (sheet.Reme) {
     }
     return a.reme[a.irem]
 
+}
+
+
+func (a *App) SwitchWhat () bool {
+    a.what = !a.what
+    return a.what
+}
+
+func (a *App) GetWhat () bool {
+    return a.what
+}
+
+
+func (a *App) SwitchSelect () {
+    fmt.Println ("Select")
+}
+
+
+func (a *App) SwitchOrder () {
+    fmt.Println ("Oreder")
 }
