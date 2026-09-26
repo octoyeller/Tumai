@@ -16,11 +16,15 @@ Pick file and set option:
 - Show: Name / Meaning
 - Filter: `not implemented`
 - Order: Random / As in the file
-`<` - shows previous card.
-`Next!` - marks as learned and moves to the next card.
-`>` - marks as not learned and moves on.
+
+- `<` - shows previous card.
+- `Next!` - marks as learned and moves to the next card.
+- `>` - marks as not learned and moves on.
 
 Scoreboard shows number of learned, tested, all cards in the set.
+
+
+### Files
 
 The excel must contain a header (first row is not parsed to the deck) and 5 columns of which:
 1. Name - the single word / term you want to memorize
@@ -31,7 +35,7 @@ The excel must contain a header (first row is not parsed to the deck) and 5 colu
 
 Do not touch `~/.Tumai.list` or any spreadsheet opened in the app while it is running.
 
-# Issues
+### Issues
 
 The state of this application is `as is` and I do not provide any guaranty. If you find a bug then report it or whatever then pray I open github the same year.
 
