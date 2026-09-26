@@ -170,3 +170,6 @@ func Shuffler (in []Reme) (out []int) {
 
     return out
 }
+
+
+//  TODO    images?

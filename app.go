@@ -198,6 +198,7 @@ func (a *App) GetWhat () bool {
 
 func (a *App) SwitchSelect () {
     fmt.Println ("Select")
+    //  TODO    implement select filter
 }
 
 

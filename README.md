@@ -1,41 +1,39 @@
 # Tumai
 
-1. App start
-2. Read list file
-    - if no file => create
-    - if can't read => splash screen
-3. Print list
-    - if the are more than 5-7 files => button to show all
-    - the entry on visible list is button to add more
-4. Chose file / option
-    - new file already on list => open that file
-    - file non-existent => splash screen? & back to list screen
-5. Open file for processing
-    - 
-    - 
-6. Exit file => modify the date in the file
-7. On exit save the file
+Offline flashcard app with no limit of cards in single session. Made for learning definitions and vocabulary of foreign language. Remembers learned.
 
+### Requirements
 
-ORDER - as goes / random 
-SELECT - all / learned / not learned
-WHAT - name / meaning
-SAVE
-EXIT
+- go 1.25.0
+- wails 2.15.0
+- libwebkit2gtk-4.0-dev or `libwebkit2gtk-4.0.so`
+- make
 
-excel structure
-Sheet1
-col 1 - name
-col 2 - phonetic
-col 3 - meaning
-col 4 - notes   (optional)
-col 5 - learned / not learned   (optional - will be added on save)
+### Usage
 
+Add excel file to the list. Can be MS spreadsheet or Libre.
+Pick file and set option:
+    - Show: Name / Meaning
+    - Filter: `not implemented`
+    - Order: Random / As in the file
+`<` - shows previous card.
+`Next!` - marks as learned and moves to the next card.
+`>` - marks as not learned and moves on.
 
-Contents of the list file:
-```
-12314\t/absolute/path
-12314\t/absolute/path
-int seconds tab path
-```
-The integer is date of last registered access is seconds. The date is registered by the app when opening the file via this application.
+Scoreboard shows number of learned, tested, all cards in the set.
+
+The excel must contain a header (first row is not parsed to the deck) and 5 columns of which:
+    1. Name - the single word / term you want to memorize
+    2. Phonetics - how it is supposed to be pronounced
+    3. Meaning - the definition of the term or meaning of the word
+    4. Notes - optional additional information
+    5. Status - this column is written by the program (boolean) and is preferred empty when opened for the first time.
+
+Do not touch `~/.Tumai.list` or any spreadsheet opened in the app while it is running.
+
+# Issues
+
+The state of this application is `as is` and I do not provide any guaranty. If you find a bug then report it or whatever then pray I open github the same year.
+
+If I decide I have too much spare time (or I'll be forced by the lack of sufficient learning tools) I'll add the `Filter` button, images on flashcards.
+If you see this ported to windows, know my day sucked.
