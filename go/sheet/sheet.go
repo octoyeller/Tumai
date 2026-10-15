@@ -6,8 +6,13 @@ import (
     "fmt"
     "strconv"
     "math/rand"
+    "strings"
+    "path/filepath"
+    "regexp"
 
     "github.com/xuri/excelize/v2"
+//    "github.com/fwilhe2/rechenbrett"    // write
+    "github.com/knieriem/odf/ods"       // read
 )
 
 
@@ -54,6 +59,15 @@ func Save_sheet (input []Reme) bool {
         return false
     }
 
+    ext := strings.ToLower (filepath.Ext (file_path))
+    if ext ==".ods" {
+        return saveODS (input)
+    }
+    return saveXLSX (input)
+}
+
+
+func saveXLSX (input []Reme) bool {
     f, err := excelize.OpenFile (file_path)
     if err != nil {
         log.Printf ("Failed to open sheet for writing: %v\n%v\n", file_path, err)
@@ -90,7 +104,23 @@ func Save_sheet (input []Reme) bool {
 }
 
 
+func saveODS (input []Reme) bool {
+    return false
+}
+
+
 func Open () (bool, [][]string) {
+    ext := strings.ToLower (filepath.Ext (file_path) )
+    if ext == ".ods" {
+        return openODS ()
+    }
+    return openXLSX ()
+}
+
+
+
+
+func openXLSX () (bool, [][]string) {
     f, err := excelize.OpenFile (file_path)
     if err != nil {
         log.Printf ("Could not open file: %s\n%s\n", file_path, err)
@@ -119,6 +149,73 @@ func Open () (bool, [][]string) {
 
 
 
+func openODS () (bool, [][]string) {
+    f, err := ods.Open (file_path)
+    if err != nil {
+        log.Printf ("Could not open file: %s\n%s\n", file_path, err)
+        return false, nil
+    }
+    defer f.Close ()
+
+    var doc ods.Doc
+    if err := f.ParseContent (&doc); err != nil {
+        log.Printf ("Error reading file: %s\n%s\n", file_path, err)
+        return false, nil
+    }
+
+    if len (doc.Table) == 0 {
+        log.Printf ("No tables in the file: %s\n", file_path)
+        return false, nil
+    }
+
+
+    reee := regexp.MustCompile (`<[^>]*>`)
+
+    var rows [][]string
+    for _, row := range doc.Table[0].Row {
+        var row_content []string
+
+        for _, cell := range row.Cell {
+            var cell_text []string
+            for _, p := range cell.P {
+                text := reee.ReplaceAllString (p.XML, "")
+                if text != "" {
+                    cell_text = append (cell_text, text)
+                }
+            }
+
+            rape_text := strings.Join (cell_text, "\n")
+
+            repeat := cell.RepeatedCols
+
+            if repeat < 1 {
+                repeat = 1
+            }
+
+            if rape_text == "" && repeat > 50 {
+                repeat = 1
+            }
+
+            for i := 0; i < repeat; i++ {
+                row_content = append (row_content, rape_text)
+            }
+
+        }
+
+        if len (row_content[0]) < 1 {
+            continue
+        }
+        rows = append (rows, row_content)
+    }
+
+    if len (rows) < 2 {
+        return false, nil
+    }
+
+    return true, rows[1:]
+}
+
+
 
 func Get_reme (rows [][]string) (ra []Reme) {
 
@@ -127,20 +224,23 @@ func Get_reme (rows [][]string) (ra []Reme) {
 
     for _, val := range rows {
         i = len (val)
+        if i < 3 {
+            continue
+        }
 
         r.Name = val[0]
         r.Phonetic = val[1]
         r.Meaning = val[2]
 
-        if i > 5 {
+        if i > 4 {
             if (val[4] != "true") {
-                r.Mastered = true
-            } else {
                 r.Mastered = false
+            } else {
+                r.Mastered = true
             }
             r.Note = val[3]
 
-        } else if i > 4 {
+        } else if i > 3 {
             r.Mastered = false
             r.Note = val[3]
 
