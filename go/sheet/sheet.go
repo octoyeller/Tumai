@@ -9,10 +9,11 @@ import (
     "strings"
     "path/filepath"
     "regexp"
+    "os"
 
     "github.com/xuri/excelize/v2"
-//    "github.com/fwilhe2/rechenbrett"    // write
-    "github.com/knieriem/odf/ods"       // read
+    odso "github.com/fwilhe2/rechenbrett"    // write
+    odsi "github.com/knieriem/odf/ods"       // read
 )
 
 
@@ -105,7 +106,45 @@ func saveXLSX (input []Reme) bool {
 
 
 func saveODS (input []Reme) bool {
-    return false
+    h := make([]odso.Cell, 5)
+    h[0] = odso.MakeCell ("Name", "string")
+    h[1] = odso.MakeCell ("Phonetic", "string")
+    h[2] = odso.MakeCell ("Meaning", "string")
+    h[3] = odso.MakeCell ("Notes", "string")
+    h[4] = odso.MakeCell ("Mastered", "string")
+
+    var tbl [][]odso.Cell
+    tbl = append (tbl, h)
+
+    for _, val := range input {
+        row := make ([]odso.Cell, 5)
+        row[0] = odso.MakeCell (val.Name, "string")
+        row[1] = odso.MakeCell (val.Phonetic, "string")
+        row[2] = odso.MakeCell (val.Meaning, "string")
+        row[3] = odso.MakeCell (val.Note, "string")
+        row[4] = odso.MakeCell (strconv.FormatBool(val.Mastered), "string")
+        tbl = append (tbl, row)
+    }
+
+    doc, err := odso.MakeSpreadsheetWithName ("Sheet1", tbl)
+    if err != nil {
+        log.Printf ("Could not create a spreadsheet: %v\n", err)
+        return false
+    }
+
+    s, save_err := odso.MakeOds (doc)
+    if save_err != nil {
+        log.Printf ("Failed to make ODS: %v\n", save_err)
+        return false
+    }
+
+    wrt_err := os.WriteFile(file_path, s.Bytes (), 0644)
+    if wrt_err != nil {
+        log.Printf("Failed to save ODS file: %v\n", wrt_err)
+        return false
+    }
+
+    return true
 }
 
 
@@ -150,14 +189,14 @@ func openXLSX () (bool, [][]string) {
 
 
 func openODS () (bool, [][]string) {
-    f, err := ods.Open (file_path)
+    f, err := odsi.Open (file_path)
     if err != nil {
         log.Printf ("Could not open file: %s\n%s\n", file_path, err)
         return false, nil
     }
     defer f.Close ()
 
-    var doc ods.Doc
+    var doc odsi.Doc
     if err := f.ParseContent (&doc); err != nil {
         log.Printf ("Error reading file: %s\n%s\n", file_path, err)
         return false, nil
