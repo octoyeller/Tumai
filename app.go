@@ -82,7 +82,7 @@ func (a *App) SaveList () {
 
 
 
-func (a *App) Run_file (i int) {
+func (a *App) Run_file (i int) int {
     _, ti := file_roller.Get_time ()
     a.list[i].Date_accessed = ti
     a.reme = sheet.Run_sheet (a.list[i])
@@ -91,7 +91,7 @@ func (a *App) Run_file (i int) {
     a.Update_score ()
     a.what = false
     a.shuffled = false
-
+    return a.sb.All
 }
 
 

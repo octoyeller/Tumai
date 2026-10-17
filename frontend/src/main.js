@@ -161,7 +161,11 @@ function showCarousel() {
 
 async function roll_file (i) {
     showCarousel();
-    await Run_file(i);
+    let len = await Run_file(i);
+    if (len < 1) {
+        showMenu();
+        return;
+    }
     const reme = await Get_card ();
     await showFace();
     await setCard(reme);

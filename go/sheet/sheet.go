@@ -44,6 +44,7 @@ func Run_sheet (e file_roller.Entry) (ra []Reme) {
 
     success, rows := Open ()
     if !success {
+        log.Printf ("Failed to read cards from: %v\n", file_path)
         return ra
     }
 
