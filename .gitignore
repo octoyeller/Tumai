@@ -5,3 +5,4 @@ build/bin/
 filelist
 test.*
 wails.json
+release/
